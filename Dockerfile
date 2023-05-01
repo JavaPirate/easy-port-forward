@@ -1,4 +1,4 @@
-FROM haproxy:2.6.5-alpine
+FROM haproxy:2.6.12-alpine
 
 ENV WORKDIR=/haproxy
 ENV LISTEN_PORT=80
