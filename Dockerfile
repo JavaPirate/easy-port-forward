@@ -1,0 +1,28 @@
+FROM haproxy:2.6.5-alpine
+
+ENV WORKDIR=/haproxy
+ENV LISTEN_PORT=80
+ENV FORWARD_ADDRESS=localhost:80
+
+ENV TIMEOUT_CLIENT=5m
+ENV TIMEOUT_SERVER=5m
+ENV TIMEOUT_CHECK=10s
+ENV TIMEOUT_CONNECT=10s
+ENV TIMEOUT_HTTP_REQUEST=10s
+ENV TIMEOUT_HTTP_KEEP_ALIVE=10s
+ENV TIMEOUT_QUEUE=1m
+ENV MAX_CONNECTIONS=1000
+
+
+USER root
+RUN apk add gettext
+RUN mkdir -p ${WORKDIR}
+RUN chown -R haproxy:haproxy  ${WORKDIR}
+
+ADD haproxy.cfg.template  ${WORKDIR}
+ADD run.sh ${WORKDIR}
+RUN chmod +x ${WORKDIR}/run.sh
+
+USER haproxy
+
+CMD ["sh","-c","${WORKDIR}/run.sh"]
