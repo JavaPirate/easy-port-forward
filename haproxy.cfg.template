@@ -15,7 +15,14 @@ defaults
     timeout http-keep-alive ${TIMEOUT_HTTP_KEEP_ALIVE}
     timeout check   ${TIMEOUT_CHECK}
     maxconn         ${MAXCONN}
+
+resolvers default_dns
+    parse-resolv-conf
+    resolve_retries 3
+    timeout retry   1s
+    hold valid      30s
+
 listen default_listen
     log stdout local0
     bind    0.0.0.0:${LISTEN_PORT}
-    server  default_server ${FORWARD_ADDRESS} check inter 3s rise 3 fall 5
+    server  default_server ${FORWARD_ADDRESS} check inter 3s rise 3 fall 5 check resolvers default_dns
