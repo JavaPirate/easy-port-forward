@@ -1,4 +1,4 @@
-FROM haproxy:2.8.0-alpine
+FROM haproxy:2.9.1-alpine
 
 ENV LISTEN_PORT=80
 ENV FORWARD_ADDRESS=localhost:80
